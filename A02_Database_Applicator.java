@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 /**
  * Demonstrates that our database tables can created and contain data. 
- * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis + Ghost In the Room
  */
 
 public class A02_Database_Applicator {
