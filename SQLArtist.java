@@ -1,4 +1,4 @@
-package A02_Database_App;
+package tattooPayroll;
 
 /**
  * SQL Code pertaining to the Artist Table to create, insert, drop and select data.

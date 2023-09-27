@@ -1,4 +1,5 @@
-package A02_Database_App;
+package tattooPayroll;
+
 /**
  * SQL Code pertaining to the Appointment Table to create, insert, drop and select data.
  * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis

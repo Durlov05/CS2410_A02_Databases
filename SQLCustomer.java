@@ -1,4 +1,4 @@
-package A02_Database_App;
+package tattooPayroll;
 
 /**
  * SQL Code pertaining to the Customer Table to create, insert, drop and select data.
