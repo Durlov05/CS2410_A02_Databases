@@ -7,17 +7,17 @@ package tattooPayroll;
 public class SQLAppointment {
 	public static final String createTable = 
 			"CREATE TABLE Appointment ("
-			+ "ApptId  int not null primary key "
+			+ "ApptID  int not null primary key "
 			+ "GENERATED ALWAYS AS IDENTITY "
 			+ "(START WITH 800, INCREMENT BY 1), "
-			+ "AritstID int,"
+			+ "ArtistID int,"
 			+ "CustomerID int,"
 			+ "ApptDate DATE,"
 			+ "Hours int"
 			+ ")";
 	
 	public static final String insertData = 
-			"INSERT INTO Appointment (AritstID, CustomerID, ApptDate, Hours) VALUES "
+			"INSERT INTO Appointment (ArtistID, CustomerID, ApptDate, Hours) VALUES "
 			+ "(500, 101, '2023-10-10',2), "
 			+ "(501, 103, '2023-09-25',1), "
 			+ "(500, 102, '2023-10-09',3), "
@@ -26,7 +26,96 @@ public class SQLAppointment {
 	
 	public static final String selectAll = 
 			"Select * from Appointment";
+	
 
 	public static final String dropTable = 
 			"DROP TABLE Appointment";
+	
+	public static String selectArtistAppt(int id) {
+		return "Select * from Appointment WHERE artistID = " + id;
+
+	}
+	
+	public static String selectTotalRevenue() {
+		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
+				+ "WHEN month(ApptDate) = 2 THEN 'February' "
+				+ "WHEN month(ApptDate) = 3 THEN 'March' "
+				+ "WHEN month(ApptDate) = 4 THEN 'April' "
+				+ "WHEN month(ApptDate) = 5 THEN 'May' "
+				+ "WHEN month(ApptDate) = 6 THEN 'June' "
+				+ "WHEN month(ApptDate) = 7 THEN 'July' "
+				+ "WHEN month(ApptDate) = 8 THEN 'August' "
+				+ "WHEN month(ApptDate) = 9 THEN 'September' "
+				+ "WHEN month(ApptDate) = 10 THEN 'October' "
+				+ "WHEN month(ApptDate) = 11 THEN 'November' "
+				+ "WHEN month(ApptDate) = 12 THEN 'December' "
+				+ "END as Month, "
+				+ "sum(apt.hours * art.HourlyRate) as totalRevenue "
+				+ "from Appointment as apt "
+				+ "inner join artist as art on apt.artistID = art.artistid "
+				+ "group by CASE WHEN month(ApptDate) = 1 THEN 'January' "
+				+ "WHEN month(ApptDate) = 2 THEN 'February' "
+				+ "WHEN month(ApptDate) = 3 THEN 'March' "
+				+ "WHEN month(ApptDate) = 4 THEN 'April' "
+				+ "WHEN month(ApptDate) = 5 THEN 'May' "
+				+ "WHEN month(ApptDate) = 6 THEN 'June' "
+				+ "WHEN month(ApptDate) = 7 THEN 'July' "
+				+ "WHEN month(ApptDate) = 8 THEN 'August' "
+				+ "WHEN month(ApptDate) = 9 THEN 'September' "
+				+ "WHEN month(ApptDate) = 10 THEN 'October' "
+				+ "WHEN month(ApptDate) = 11 THEN 'November' "
+				+ "WHEN month(ApptDate) = 12 THEN 'December' "
+				+ "END ";
+	}
+	
+	public static String selectTotalArtistRevenue(int artID) {
+		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
+				+ "WHEN month(ApptDate) = 2 THEN 'February' "
+				+ "WHEN month(ApptDate) = 3 THEN 'March' "
+				+ "WHEN month(ApptDate) = 4 THEN 'April' "
+				+ "WHEN month(ApptDate) = 5 THEN 'May' "
+				+ "WHEN month(ApptDate) = 6 THEN 'June' "
+				+ "WHEN month(ApptDate) = 7 THEN 'July' "
+				+ "WHEN month(ApptDate) = 8 THEN 'August' "
+				+ "WHEN month(ApptDate) = 9 THEN 'September' "
+				+ "WHEN month(ApptDate) = 10 THEN 'October' "
+				+ "WHEN month(ApptDate) = 11 THEN 'November' "
+				+ "WHEN month(ApptDate) = 12 THEN 'December' "
+				+ "END as Month, "
+				+ "Cust.FirstName + ' ' + Cust.LastName AS [Customer Name]"
+				+ "sum(apt.hours * art.HourlyRate) as Revenue "
+				+ "from Appointment as apt "
+				+ "inner join artist as art on apt.artistID = art.artistid "
+				+ "and art.artistid = " + artID + " "
+				+ "inner join Customer as Cust on apt.CustomerID = Cust.CustomerId"
+				+ "group by CASE WHEN month(ApptDate) = 1 THEN 'January' "
+				+ "WHEN month(ApptDate) = 2 THEN 'February' "
+				+ "WHEN month(ApptDate) = 3 THEN 'March' "
+				+ "WHEN month(ApptDate) = 4 THEN 'April' "
+				+ "WHEN month(ApptDate) = 5 THEN 'May' "
+				+ "WHEN month(ApptDate) = 6 THEN 'June' "
+				+ "WHEN month(ApptDate) = 7 THEN 'July' "
+				+ "WHEN month(ApptDate) = 8 THEN 'August' "
+				+ "WHEN month(ApptDate) = 9 THEN 'September' "
+				+ "WHEN month(ApptDate) = 10 THEN 'October' "
+				+ "WHEN month(ApptDate) = 11 THEN 'November' "
+				+ "WHEN month(ApptDate) = 12 THEN 'December' "
+				+ "END, "
+				+ "Cust.FirstName + ' ' + Cust.LastName ";
+	}
+	
+	public static String addAppt(int artID, int custID, String apptDate, int hours) {
+		return "INSERT INTO Appointment (ArtistID, CustomerID, ApptDate, Hours) VALUES "
+				+ "("+artID+", "+custID+", '"+apptDate+"',"+hours+") ";
+	}
+	
+	public static String deleteAppt(int apptID) {
+		return "DELETE FROM Appointment WHERE ApptID = " + apptID;
+	}
+	
+	public static String updateAppt(int apptID, int artID, int custID, String apptDate, int hours) {
+		return "UPDATE Appointment SET ArtistID = "+artID+", CustomerID = "+custID+", "
+				+ "ApptDate = '"+apptDate+"', Hours = "+hours + " "
+				+ "WHERE ApptID = " + apptID;
+	}
 }
