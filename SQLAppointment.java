@@ -31,11 +31,6 @@ public class SQLAppointment {
 	public static final String dropTable = 
 			"DROP TABLE Appointment";
 	
-	public static String selectArtistAppt(int id) {
-		return "Select * from Appointment WHERE artistID = " + id;
-
-	}
-	
 	public static String selectTotalRevenue() {
 		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
@@ -118,4 +113,22 @@ public class SQLAppointment {
 				+ "ApptDate = '"+apptDate+"', Hours = "+hours + " "
 				+ "WHERE ApptID = " + apptID;
 	}
+	
+	public static final String selectAllInfo = 
+			"Select apt.ApptDate, Cust.FirstName + ' ' + Cust.LastName AS [Customer Name] "
+			+ "art.ArtistName As [Artist Name], apt.Hours "
+			+ "from Appointment apt "
+			+ "inner join artist as art on apt.artistID = art.artistid "
+			+ "inner join Customer as Cust on apt.CustomerID = Cust.CustomerId";
+	
+	public static String selectArtistAppt(int artID) {
+		return "Select apt.ApptDate, Cust.FirstName + ' ' + Cust.LastName AS [Customer Name], apt.Hours "
+				+ "from Appointment apt "
+				+ "inner join artist as art on apt.artistID = art.artistid "
+				+ "and art.artistid = " + artID + " "
+				+ "inner join Customer as Cust on apt.CustomerID = Cust.CustomerId";
+	}
 }
+
+
+
