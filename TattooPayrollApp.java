@@ -64,9 +64,9 @@ public class TattooPayrollApp extends JFrame {
 			}
 			System.out.println("");
 
-//			statement.execute(SQLAppointment.dropTable);
-//			statement.execute(SQLAppointment.createTable);
-//			statement.execute(SQLAppointment.insertData);
+			statement.execute(SQLAppointment.dropTable);
+			statement.execute(SQLAppointment.createTable);
+			statement.execute(SQLAppointment.insertData);
 //			ResultSet resultSet3 = statement.executeQuery(SQLAppointment.selectAll);//(selectStuff);
 //			printTableData(resultSet3);
 //			System.out.println("");

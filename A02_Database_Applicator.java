@@ -1,4 +1,4 @@
-package A02_Database_App;
+package tattooPayroll;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Vector;
 
 /**
  * Demonstrates that our database tables can created and contain data. 
@@ -14,36 +15,48 @@ import java.sql.Statement;
 
 public class A02_Database_Applicator {
 	private static final String databaseURL = "jdbc:derby:FirstDatabase;create=true";
+	private static Vector<DropdownItem> dropdownArtistList = new Vector<>();
+	
 
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager.getConnection(databaseURL);
 				Statement statement = connection.createStatement()) {
-			statement.execute(SQLCustomer.dropTable);
-			statement.execute(SQLCustomer.createTable);
-			statement.execute(SQLCustomer.insertData);
-			ResultSet resultSet = statement.executeQuery(SQLCustomer.selectAll);//(selectStuff);
-			printTableData(resultSet);
-			System.out.println("");
+		//	statement.execute(SQLCustomer.dropTable);
+//			statement.execute(SQLCustomer.createTable);
+//			statement.execute(SQLCustomer.insertData);
+//			ResultSet resultSet = statement.executeQuery(SQLCustomer.selectAll);//(selectStuff);
+//			printTableData(resultSet);
+//			System.out.println("");
 			
-			statement.execute(SQLArtist.dropTable);
-			statement.execute(SQLArtist.createTable);
-			statement.execute(SQLArtist.insertData);
+		//	statement.execute(SQLArtist.dropTable);
+//			statement.execute(SQLArtist.createTable);
+//			statement.execute(SQLArtist.insertData);
 			ResultSet resultSet2 = statement.executeQuery(SQLArtist.selectAll);//(selectStuff);
-			printTableData(resultSet2);
-			System.out.println("");
+		//	printTableData(resultSet2);
+//			System.out.println("\nBLOOP BLORP\n");
+			while(resultSet2.next()) {
+				Object id = resultSet2.getObject("ARTISTID");
+				Object name = resultSet2.getObject("ARTISTNAME");
+				DropdownItem item = new DropdownPersonItem(id, name);	
+				dropdownArtistList.add(item);
+			}
 			
-			statement.execute(SQLAppointment.dropTable);
-			statement.execute(SQLAppointment.createTable);
-			statement.execute(SQLAppointment.insertData);
-			ResultSet resultSet3 = statement.executeQuery(SQLAppointment.selectAll);//(selectStuff);
-			printTableData(resultSet3);
-			System.out.println("");
+			
+			
+		//	statement.execute(SQLAppointment.dropTable);
+//			statement.execute(SQLAppointment.createTable);
+//			statement.execute(SQLAppointment.insertData);
+//			ResultSet resultSet3 = statement.executeQuery(SQLAppointment.selectAll);//(selectStuff);
+//			printTableData(resultSet3);
+//			System.out.println("");
 			
 		} catch (SQLException e) {
 			System.out.println("Something went wrong accessing SQL.");
 			e.printStackTrace();
 		}
-		System.out.println("\ndone.");
+		System.out.println("\ndone.\n");
+		
+		System.out.println(dropdownArtistList);
 
 	}
 	
@@ -66,7 +79,7 @@ public class A02_Database_Applicator {
 			columnWidths[i] = label.length();
 			}
 		System.out.println();
-		System.out.println("-".repeat(strlen));
+	//	System.out.println("-".repeat(strlen));
 		
 		// System.out.printf("%-7s %-8s", "Jon", "Meier")
 		
