@@ -29,8 +29,10 @@ public class TattooPayrollApp extends JFrame {
 	private JPanel contentPane;
 	private CardLayout cl = new CardLayout();
 	private JPanel cardContainer;
+	private TattooPayrollApp frame = this;
 
 	private static Vector<DropdownItem> dropdownArtistList = new Vector<>();
+
 
 	final static String APPTPANEL = "View All Appointments";
 	final static String CREATEPANEL = "Create appointment";
@@ -111,7 +113,7 @@ public class TattooPayrollApp extends JFrame {
 		contentPane.add(cardContainer, BorderLayout.CENTER);
 		cardContainer.setLayout(cl);
 
-		JPanel ApptDisplayPanel = new ApptDisplayPanel();
+		JPanel ApptDisplayPanel = new ApptDisplayPanel(this);
 		cardContainer.add(ApptDisplayPanel, APPTPANEL);
 
 		JPanel ShopRevenueDisplayPanel = new ShopRevenueDisplayPanel();
@@ -119,10 +121,23 @@ public class TattooPayrollApp extends JFrame {
 
 		JPanel CreateApptPanel = new CreateApptPanel();
 		cardContainer.add(CreateApptPanel, CREATEPANEL);
-
-		JPanel EditApptPanel = new EditApptPanel();
-		cardContainer.add(EditApptPanel, EDITAPPT);
-
+	}
+	
+	/**
+	 * TODO Needs doc comment
+	 * @param card
+	 * @param name
+	 */
+	public void addNewCard(JPanel card, String name) {
+		cardContainer.add(card, name);
+	}
+	
+	/**
+	 * TODO Needs doc comment
+	 * @param name
+	 */
+	public void switchToCard(String name) {
+		cl.show(cardContainer, name);
 	}
 
 	private void createControlPnl() {
@@ -224,7 +239,7 @@ public class TattooPayrollApp extends JFrame {
 					String name = option.getName();
 					String cardName = name + "appt";
 
-					cardContainer.add(new ArtistApptDisplayPanel(id, name), cardName);
+					cardContainer.add(new ArtistApptDisplayPanel(id, name, frame), cardName);
 					cl.show(cardContainer, cardName);
 				} else {
 					cl.show(cardContainer, APPTPANEL);
