@@ -82,7 +82,7 @@ public class ApptDisplayPanel extends JPanel {
 
 		try (Connection connection = DriverManager.getConnection(databaseURL);
 				Statement statement = connection.createStatement()) {
-			ResultSet apptTableRs = statement.executeQuery(SQLAppointment.selectAll);
+			ResultSet apptTableRs = statement.executeQuery(SQLAppointment.selectAllInfo);
 
 			while (apptTableRs.next()) {
 				Object apptID = apptTableRs.getObject("ApptID");
@@ -90,8 +90,11 @@ public class ApptDisplayPanel extends JPanel {
 				Object customerID = apptTableRs.getObject("CustomerID");
 				Object apptDate = apptTableRs.getObject("ApptDate");
 				Object hours = apptTableRs.getObject("Hours");
-
-				SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours);
+				Object artName = apptTableRs.getObject("Artist_Name");
+				Object custName = apptTableRs.getObject("Customer_Name");
+				
+				//SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours);
+				SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours, artName, custName);
 				apptLine.displayAllAppts();
 				apptLine.addMouseListener(new MouseAdapter() {
 					@Override
@@ -106,9 +109,14 @@ public class ApptDisplayPanel extends JPanel {
 
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						int id = Integer.parseInt(apptID.toString());
-						JPanel editApt = new EditApptPanel(id);
-						String name = apptID.toString();
+//						int id = Integer.parseInt(apptID.toString());
+//						JPanel editApt = new EditApptPanel(id);
+//						String name = apptID.toString();
+//						frame.addNewCard(editApt, name);
+//						frame.switchToCard(name);
+						
+						JPanel editApt = new EditApptPanel(apptLine);
+						String name = "" + apptLine.getArtistID();
 						frame.addNewCard(editApt, name);
 						frame.switchToCard(name);
 					}

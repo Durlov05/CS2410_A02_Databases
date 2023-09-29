@@ -18,6 +18,7 @@ import java.sql.Statement;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import java.awt.SystemColor;
 
 public class ArtistApptDisplayPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -79,6 +80,7 @@ public class ArtistApptDisplayPanel extends JPanel {
 
 	private JPanel createApptListPanel() {
 		JPanel apptList = new JPanel();
+		apptList.setBackground(SystemColor.activeCaption);
 		apptList.setLayout(new BoxLayout(apptList, BoxLayout.PAGE_AXIS));
 		return apptList;
 	}
@@ -95,8 +97,12 @@ public class ArtistApptDisplayPanel extends JPanel {
 				Object customerID = artistApptRs.getObject("CustomerID");
 				Object apptDate = artistApptRs.getObject("ApptDate");
 				Object hours = artistApptRs.getObject("Hours");
+				//Object artName = artistApptRs.getObject("Artist_Name");
+				Object custName = artistApptRs.getObject("Customer_Name");
 
-				SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours);
+				//SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours);
+				//SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours, artName, custName);
+				SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours, custName);
 				apptLine.displayArtistAppts();
 				apptLine.addMouseListener(new MouseAdapter() {
 					@Override
@@ -111,9 +117,10 @@ public class ArtistApptDisplayPanel extends JPanel {
 
 					@Override
 					public void mouseReleased(MouseEvent e) {
-						int id = Integer.parseInt(apptID.toString());
-						JPanel editApt = new EditApptPanel(id);
-						String name = apptID.toString();
+						//int id = Integer.parseInt(apptID.toString());
+						//int id = apptLine.getApptID();
+						JPanel editApt = new EditApptPanel(apptLine);
+						String name = "" + apptLine.getArtistID();
 						frame.addNewCard(editApt, name);
 						frame.switchToCard(name);
 					}

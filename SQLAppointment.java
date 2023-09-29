@@ -115,21 +115,21 @@ public class SQLAppointment {
 	}
 	
 	public static final String selectAllInfo = 
-			"Select Appointment.ApptID, Appointment.ApptDate, "
-			+ "Customer.FirstName AS Customer_Name, "  // + ' ' + Customer.LastName 
+			"Select Appointment.ApptID, Appointment.ApptDate, Appointment.ArtistID, Appointment.CustomerID, "
+			+ "Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, " 
 			+ "Artist.ArtistName As Artist_Name, Appointment.Hours "
 			+ "from Appointment "
 			+ "join Artist ON Appointment.ArtistID = Artist.ArtistId "
 			+ "join Customer on Appointment.CustomerID = Customer.CustomerId";
 	
 	public static String selectArtistAppt(int artID) {
-		return "Select Appointment.ApptDate, Customer.FirstName + ' ' + Customer.LastName AS Customer_Name, Appointment.Hours "
+		return "Select Appointment.ApptDate, Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, Appointment.Hours,"
+				+ "Appointment.ArtistID, Appointment.CustomerID, Appointment.ApptID "
 				+ "from Appointment "
 				+ "inner join Artist on Appointment.ArtistID = Artist.ArtistId "
 				+ "and Artist.ArtistId = " + artID + " "
 				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId";
 	}
 }
-
 
 
