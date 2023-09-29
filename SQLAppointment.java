@@ -77,7 +77,7 @@ public class SQLAppointment {
 				+ "WHEN month(ApptDate) = 11 THEN 'November' "
 				+ "WHEN month(ApptDate) = 12 THEN 'December' "
 				+ "END as Month, "
-				+ "Cust.FirstName + ' ' + Cust.LastName AS [Customer Name]"
+				+ "Customer.FirstName + ' ' + Customer.LastName AS Customer_Name "
 				+ "sum(apt.hours * art.HourlyRate) as Revenue "
 				+ "from Appointment as apt "
 				+ "inner join artist as art on apt.artistID = art.artistid "
@@ -115,18 +115,19 @@ public class SQLAppointment {
 	}
 	
 	public static final String selectAllInfo = 
-			"Select apt.ApptDate, Cust.FirstName + ' ' + Cust.LastName AS [Customer Name] "
-			+ "art.ArtistName As [Artist Name], apt.Hours "
-			+ "from Appointment apt "
-			+ "inner join artist as art on apt.artistID = art.artistid "
-			+ "inner join Customer as Cust on apt.CustomerID = Cust.CustomerId";
+			"Select Appointment.ApptID, Appointment.ApptDate, "
+			+ "Customer.FirstName AS Customer_Name, "  // + ' ' + Customer.LastName 
+			+ "Artist.ArtistName As Artist_Name, Appointment.Hours "
+			+ "from Appointment "
+			+ "join Artist ON Appointment.ArtistID = Artist.ArtistId "
+			+ "join Customer on Appointment.CustomerID = Customer.CustomerId";
 	
 	public static String selectArtistAppt(int artID) {
-		return "Select apt.ApptDate, Cust.FirstName + ' ' + Cust.LastName AS [Customer Name], apt.Hours "
-				+ "from Appointment apt "
-				+ "inner join artist as art on apt.artistID = art.artistid "
-				+ "and art.artistid = " + artID + " "
-				+ "inner join Customer as Cust on apt.CustomerID = Cust.CustomerId";
+		return "Select Appointment.ApptDate, Customer.FirstName + ' ' + Customer.LastName AS Customer_Name, Appointment.Hours "
+				+ "from Appointment "
+				+ "inner join Artist on Appointment.ArtistID = Artist.ArtistId "
+				+ "and Artist.ArtistId = " + artID + " "
+				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId";
 	}
 }
 
