@@ -1,5 +1,8 @@
 package tattooPayroll;
-
+/** ????
+* This is the constructor for each of the Dropdown items.
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
 public class DropdownItem {
 	private String name;
 

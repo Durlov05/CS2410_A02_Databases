@@ -1,4 +1,8 @@
 package tattooPayroll;
+/**
+ * This is the main file that creates program. It creates a frame and populates the drop downs.
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+ */
 
 import java.awt.EventQueue;
 
@@ -41,12 +45,13 @@ public class TattooPayrollApp extends JFrame {
 	final static String SHOPREVENUE = "All Shop Revenue";
 
 	/**
-	 * Launch the application.
+	 * Here we are loading the data into the database and launching the application. 
 	 */
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager.getConnection(databaseURL);
 				Statement statement = connection.createStatement()) {
-//			statement.execute(SQLCustomer.dropTable);
+			// Should we remove these commented out lines? At least include a reason for having them.
+//			statement.execute(SQLCustomer.dropTable);  
 //			statement.execute(SQLCustomer.createTable);
 //			statement.execute(SQLCustomer.insertData);
 //			ResultSet resultSet = statement.executeQuery(SQLCustomer.selectAll);//(selectStuff);
@@ -93,7 +98,7 @@ public class TattooPayrollApp extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Create the Tattoo Payroll frame.
 	 */
 	public TattooPayrollApp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -123,18 +128,19 @@ public class TattooPayrollApp extends JFrame {
 		cardContainer.add(CreateApptPanel, CREATEPANEL);
 	}
 	
-	/**
-	 * TODO Needs doc comment
-	 * @param card
-	 * @param name
+	/** ???
+	 * The method below adds new cards into the Tattoo parlor frame that allow the user 
+	 * to step into the data.
+	 * @param card - the display which leads to the next screen.
+	 * @param name - name of the card that needs to be called upon click.
 	 */
 	public void addNewCard(JPanel card, String name) {
 		cardContainer.add(card, name);
 	}
 	
-	/**
-	 * TODO Needs doc comment
-	 * @param name
+	/** ??
+	 * This method switches to the card that was clicked and brings it up for display.
+	 * @param name - name of the card that is called upon clicking.
 	 */
 	public void switchToCard(String name) {
 		cl.show(cardContainer, name);

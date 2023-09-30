@@ -5,6 +5,9 @@ package tattooPayroll;
  * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
  */
 public class SQLCustomer {
+	/**
+	 * Creates the Customer table with an auto-generated primary key for CustomerId.
+	 */
 	public static final String createTable = 
 			"CREATE TABLE Customer ("
 			+ "CustomerId  int not null primary key "
@@ -15,6 +18,9 @@ public class SQLCustomer {
 			+ "Phone varchar(255)"
 			+ ")";
 	
+	/**
+	 * Inserts data into the Customer table.
+	 */
 	public static final String insertData = 
 			"INSERT INTO Customer (FirstName, LastName, Phone) VALUES "
 			+ "('Tom', 'Ball', '123-456-7890'), "
@@ -28,9 +34,15 @@ public class SQLCustomer {
 			+ "('Myra', 'Johnson', '523-232-8212'), "
 			+ "('Kolinda', 'Kossum', '735-754-8222')";
 	
+	/**
+	 * Selects all data from the Customer table.
+	 */
 	public static final String selectAll = 
 			"Select * from Customer";
 
+	/**
+	 *  Deletes the Customer table.
+	 */
 	public static final String dropTable = 
 			"DROP TABLE Customer";
 }

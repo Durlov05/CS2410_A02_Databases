@@ -1,5 +1,8 @@
 package tattooPayroll;
-
+/**
+* This is a display panel for showing the Revenue of a particular artist in the Tattoo Shop.
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
@@ -12,7 +15,7 @@ public class ArtistRevenueDisplayPanel extends JPanel {
 	private String name;
 
 	/**
-	 * Create the panel.
+	 * Creates the panel.
 	 */
 	public ArtistRevenueDisplayPanel(int id, String name) {
 		setBackground(new Color(104, 205, 50));

@@ -5,6 +5,10 @@ package tattooPayroll;
  * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
  */
 public class SQLAppointment {
+	
+	/**
+	 * Creates the Appointment table with an auto-generated primary key for ApptID.
+	 */
 	public static final String createTable = 
 			"CREATE TABLE Appointment ("
 			+ "ApptID  int not null primary key "
@@ -16,6 +20,9 @@ public class SQLAppointment {
 			+ "Hours int"
 			+ ")";
 	
+	/**
+	 * Inserts data into the Appointment table.
+	 */
 	public static final String insertData = 
 			"INSERT INTO Appointment (ArtistID, CustomerID, ApptDate, Hours) VALUES "
 			+ "(500, 101, '2023-10-10',2), "
@@ -24,13 +31,21 @@ public class SQLAppointment {
 			+ "(504, 100, '2023-10-01',5), "
 			+ "(502, 106, '2023-09-27',4)";
 	
+	/**
+	 * Selects all data from the Appointment table.
+	 */
 	public static final String selectAll = 
 			"Select * from Appointment";
 	
-
+	/**
+	 * Deletes the Appointment table.
+	 */
 	public static final String dropTable = 
 			"DROP TABLE Appointment";
 	
+	/**
+	 * Selects Total Revenue for the shop by Month.
+	 */
 	public static String selectTotalRevenue() {
 		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
@@ -63,6 +78,9 @@ public class SQLAppointment {
 				+ "END ";
 	}
 	
+	/**
+	 * Selects Total Revenue for the shop by Month, Customer Name and Artist.
+	 */
 	public static String selectTotalArtistRevenue(int artID) {
 		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
@@ -99,37 +117,52 @@ public class SQLAppointment {
 				+ "Cust.FirstName + ' ' + Cust.LastName ";
 	}
 	
+	/**
+	 * Inserts new line of data into the Appointment table.
+	 */
 	public static String addAppt(int artID, int custID, String apptDate, int hours) {
 		return "INSERT INTO Appointment (ArtistID, CustomerID, ApptDate, Hours) VALUES "
 				+ "("+artID+", "+custID+", '"+apptDate+"',"+hours+") ";
 	}
 	
+	/**
+	 * Deletes line of data from the Appointment table using Appointment ID.
+	 */
 	public static String deleteAppt(int apptID) {
 		return "DELETE FROM Appointment WHERE ApptID = " + apptID;
 	}
 	
+	/**
+	 * Updates line of data in the Appointment table using Appointment ID.
+	 */
 	public static String updateAppt(int apptID, int artID, int custID, String apptDate, int hours) {
 		return "UPDATE Appointment SET ArtistID = "+artID+", CustomerID = "+custID+", "
 				+ "ApptDate = '"+apptDate+"', Hours = "+hours + " "
 				+ "WHERE ApptID = " + apptID;
 	}
 	
+	/**
+	 * 
+	 */
 	public static final String selectAllInfo = 
-			"Select Appointment.ApptID, Appointment.ApptDate, Appointment.ArtistID, Appointment.CustomerID, "
-			+ "Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, " 
+			"Select Appointment.ApptID, Appointment.ApptDate, "
+			+ "Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, "  
 			+ "Artist.ArtistName As Artist_Name, Appointment.Hours "
 			+ "from Appointment "
 			+ "join Artist ON Appointment.ArtistID = Artist.ArtistId "
 			+ "join Customer on Appointment.CustomerID = Customer.CustomerId";
 	
+	/**
+	 * 
+	 */
 	public static String selectArtistAppt(int artID) {
-		return "Select Appointment.ApptDate, Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, Appointment.Hours,"
-				+ "Appointment.ArtistID, Appointment.CustomerID, Appointment.ApptID "
+		return "Select Appointment.ApptDate, Customer.FirstName + ' ' + Customer.LastName AS Customer_Name, Appointment.Hours "
 				+ "from Appointment "
 				+ "inner join Artist on Appointment.ArtistID = Artist.ArtistId "
 				+ "and Artist.ArtistId = " + artID + " "
 				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId";
 	}
 }
+
 
 

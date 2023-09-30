@@ -1,5 +1,8 @@
 package tattooPayroll;
-
+/** ???
+* This creates the panel that stores the Appointment information in various menus.
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -33,7 +36,7 @@ public class CreateApptPanel extends JPanel {
 	private int customerId;
 
 	/**
-	 * Create the panel.
+	 * Create the panel by calling Appointment, Artist and Customer information.
 	 */
 	public CreateApptPanel() {
 		setBorder(new EmptyBorder(30, 70, 30, 70));
@@ -119,12 +122,18 @@ public class CreateApptPanel extends JPanel {
 		return clientDropDown;
 	}
 
+	/**
+	 * Button that allows the user to create a new appointment.
+	 */
 	public JButton createApptBtn() {
 		JButton createApptBtn = new JButton("Create");
 		createApptBtn.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
 		return createApptBtn;
 	}
 
+	/**
+	 * Label showing the text "Length of Appointment:".
+	 */
 	public JLabel createApptLengthLbl() {
 		JLabel apptLengthLbl = new JLabel("Length of Appointment:");
 		apptLengthLbl.setBorder(new EmptyBorder(0, 150, 0, 0));
@@ -132,6 +141,9 @@ public class CreateApptPanel extends JPanel {
 		return apptLengthLbl;
 	}
 
+	/**
+	 * Text field for entering the date.
+	 */
 	public void createDateTextField() {
 		dateTextField = new JTextField();
 
@@ -140,6 +152,9 @@ public class CreateApptPanel extends JPanel {
 		dateTextField.setColumns(10);
 	}
 
+	/**
+	 * Label showing the text "Date:"
+	 */
 	public JLabel createDateLbl() {
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setBorder(new EmptyBorder(0, 250, 0, 0));
@@ -147,6 +162,9 @@ public class CreateApptPanel extends JPanel {
 		return lblDate;
 	}
 
+	/**
+	 * Panel to show Appointment Information.
+	 */
 	public JPanel createApptInfoPanel() {
 		JPanel apptInfoPanel = new JPanel();
 		apptInfoPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
@@ -154,18 +172,27 @@ public class CreateApptPanel extends JPanel {
 		return apptInfoPanel;
 	}
 
+	/**
+	 * Label showing the text "Choose Artist:"
+	 */
 	public JLabel createArtistNameLbl() {
 		JLabel artistNameLbl = new JLabel("Choose Artist:");
 		artistNameLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		return artistNameLbl;
 	}
 
+	/**
+	 * Label showing the text "Choose Client:"
+	 */
 	public JLabel createClientNameLbl() {
 		JLabel clientNameLbl = new JLabel("Choose Client:");
 		clientNameLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		return clientNameLbl;
 	}
 
+	/** ????
+	 * Panel to show Artist and Client information.
+	 */
 	public JPanel createClientArtistInfoPanel() {
 		JPanel clientArtistInfoPanel = new JPanel();
 		clientArtistInfoPanel.setBorder(new EmptyBorder(0, 100, 0, 0));
@@ -173,6 +200,9 @@ public class CreateApptPanel extends JPanel {
 		return clientArtistInfoPanel;
 	}
 
+	/**
+	 * Label showing the text "Enter New Appointment Information:"
+	 */
 	public JLabel createNewApptLbl() {
 		JLabel NewApptLbl = new JLabel("Enter New Appointment Information:");
 		NewApptLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 35));

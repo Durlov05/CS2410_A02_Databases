@@ -1,8 +1,11 @@
 package tattooPayroll;
-
+/** ????
+* This is the constructor for each of the Dropdown items that selects the Person.
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
 public class DropdownPersonItem extends DropdownItem {
 	private int id;
-
+	
 	public DropdownPersonItem(Object id, Object name) {
 		super(name.toString());
 		this.id = Integer.parseInt(id.toString());

@@ -1,5 +1,10 @@
 package tattooPayroll;
 
+/**
+* This program displays all the appointments for the Tattoo Shop in the main frame.
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import java.awt.Color;
@@ -27,7 +32,7 @@ public class ApptDisplayPanel extends JPanel {
 	private JPanel apptList;
 
 	/**
-	 * Create the panel.
+	 * This creates the panel in the main frame.
 	 */
 	public ApptDisplayPanel(TattooPayrollApp frame) {
 		this.frame = frame;
@@ -93,6 +98,7 @@ public class ApptDisplayPanel extends JPanel {
 				Object artName = apptTableRs.getObject("Artist_Name");
 				Object custName = apptTableRs.getObject("Customer_Name");
 				
+				// Should we delete these comments?
 				//SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours);
 				SelectableApptLine apptLine = new SelectableApptLine(apptDate, artistID, customerID, hours, artName, custName);
 				apptLine.displayAllAppts();
@@ -109,6 +115,7 @@ public class ApptDisplayPanel extends JPanel {
 
 					@Override
 					public void mouseReleased(MouseEvent e) {
+						// Should we delete these comments?
 //						int id = Integer.parseInt(apptID.toString());
 //						JPanel editApt = new EditApptPanel(id);
 //						String name = apptID.toString();
