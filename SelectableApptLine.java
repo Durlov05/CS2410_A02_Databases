@@ -1,10 +1,5 @@
 package tattooPayroll;
 
-/**
-* TODO
-* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
-*/
-
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
@@ -13,6 +8,14 @@ import java.awt.Dimension;
 import javax.swing.border.EmptyBorder;
 import java.awt.Cursor;
 
+/**
+ * Houses all of an appointment's data and SQL data and displays it visually. 
+ * Displays an appointment's information in any appointment view table. When
+ * clicked, it will move to a new screen where the appointment can be
+ * edited/updated.
+ * 
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+ */
 public class SelectableApptLine extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int apptID;
@@ -23,8 +26,9 @@ public class SelectableApptLine extends JPanel {
 	private String customerName;
 	private int apptLength;
 
-
-	// Should we delete these comments?
+	/**
+	 * Create the panel.
+	 */
 //	public SelectableApptLine(Object date, Object artist, Object customer, Object length) {
 //		setLayout();
 //
@@ -35,7 +39,7 @@ public class SelectableApptLine extends JPanel {
 //	}
 
 	/**
-	 * This creates the panel for selecting each appointment line and making them editable.
+	 * Inititalizes all of the values for an appointment. Meant to be displayed on All Appointments view. 
 	 */
 	public SelectableApptLine(Object date, Object artistID, Object customerID, Object length, Object artistName,
 			Object custName) {
@@ -48,40 +52,40 @@ public class SelectableApptLine extends JPanel {
 		this.customerName = custName.toString();
 		apptLength = Integer.parseInt(length.toString());
 	}
-	
+
 	/**
-	 * This creates the panel for selecting each appointment line and making them editable.
+	 * Inititalizes all of the values for an appointment. Meant to be displayed on an artist's aapointment page. 
 	 */
 	public SelectableApptLine(Object date, Object artistID, Object customerID, Object length, Object custName) {
 		setLayout();
 
 		this.date = date.toString();
 		this.artistID = Integer.parseInt(artistID.toString());
-		//this.artistName = artistName.toString();
+		// this.artistName = artistName.toString();
 		this.customerID = Integer.parseInt(customerID.toString());
 		this.customerName = custName.toString();
 		apptLength = Integer.parseInt(length.toString());
 	}
 
 	/**
-	 * This displays all appointments for the Tattoo Shop.
+	 * Adds an appointment's date, artist, customer, and length to a line. 
 	 */
 	public void displayAllAppts() {
 		setLayout(new GridLayout(0, 4, 5, 0));
 		add(createLbl(this.date));
 		add(createLbl(artistName));
 		add(createLbl(customerName));
-		add(createLbl(""+apptLength));
+		add(createLbl("" + apptLength));
 	}
 
 	/**
-	 * This displays all appointments for a specific artist of the Tattoo Shop.
+	 *Adds an appointment's date, customer, and length to a line. 
 	 */
 	public void displayArtistAppts() {
 		setLayout(new GridLayout(0, 3, 5, 0));
 		add(createLbl(this.date));
 		add(createLbl(customerName));
-		add(createLbl(""+apptLength));
+		add(createLbl("" + apptLength));
 	}
 
 	private void setLayout() {

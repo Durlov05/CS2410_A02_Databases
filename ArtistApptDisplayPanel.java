@@ -1,10 +1,5 @@
 package tattooPayroll;
 
-/**
-* This program displays all the appointments for a specific Artist in the Tattoo Shop.
-* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
-*/
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -25,10 +20,14 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.SystemColor;
 
+/**
+* This program displays all the appointments for a specific Artist in the Tattoo Shop.
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
 public class ArtistApptDisplayPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	private int id; // use this to run queries?
+	private int id; 
 	private String name;
 	private TattooPayrollApp frame;
 	private JScrollPane scrollPane;

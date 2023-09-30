@@ -1,8 +1,4 @@
 package tattooPayroll;
-/**
- * This is the main file that creates program. It creates a frame and populates the drop downs.
- * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
- */
 
 import java.awt.EventQueue;
 
@@ -26,6 +22,12 @@ import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
+/** 
+ * A payroll application for a tattoo shop that displays revenue by date and by artist
+ * based on artist appointments and their hourly wages. It creates a frame and populates the drop downs.
+ * 
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
 public class TattooPayrollApp extends JFrame {
 	private static final String databaseURL = "jdbc:derby:FirstDatabase;create=true";
 
@@ -45,13 +47,12 @@ public class TattooPayrollApp extends JFrame {
 	final static String SHOPREVENUE = "All Shop Revenue";
 
 	/**
-	 * Here we are loading the data into the database and launching the application. 
+	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager.getConnection(databaseURL);
 				Statement statement = connection.createStatement()) {
-			// Should we remove these commented out lines? At least include a reason for having them.
-//			statement.execute(SQLCustomer.dropTable);  
+//			statement.execute(SQLCustomer.dropTable);
 //			statement.execute(SQLCustomer.createTable);
 //			statement.execute(SQLCustomer.insertData);
 //			ResultSet resultSet = statement.executeQuery(SQLCustomer.selectAll);//(selectStuff);
@@ -98,7 +99,7 @@ public class TattooPayrollApp extends JFrame {
 	}
 
 	/**
-	 * Create the Tattoo Payroll frame.
+	 * Create the frame.
 	 */
 	public TattooPayrollApp() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,9 +129,8 @@ public class TattooPayrollApp extends JFrame {
 		cardContainer.add(CreateApptPanel, CREATEPANEL);
 	}
 	
-	/** ???
-	 * The method below adds new cards into the Tattoo parlor frame that allow the user 
-	 * to step into the data.
+	/**
+	 * Adds new cards to the card container so the user can switch between screens.
 	 * @param card - the display which leads to the next screen.
 	 * @param name - name of the card that needs to be called upon click.
 	 */
@@ -138,8 +138,8 @@ public class TattooPayrollApp extends JFrame {
 		cardContainer.add(card, name);
 	}
 	
-	/** ??
-	 * This method switches to the card that was clicked and brings it up for display.
+	/**
+	 * Changes to a new card in the card container.
 	 * @param name - name of the card that is called upon clicking.
 	 */
 	public void switchToCard(String name) {

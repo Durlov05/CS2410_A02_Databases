@@ -1,8 +1,5 @@
 package tattooPayroll;
-/** ???
-* This creates the panel that stores the Appointment information in various menus.
-* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
-*/
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.BorderLayout;
@@ -23,15 +20,21 @@ import javax.swing.JButton;
 import java.awt.Font;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * ??? A panel where the user can add a new appointment to the system, including
+ * the artist, customer name, appointment date, and length in hours.
+ * 
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+ */
 public class CreateApptPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private static final String databaseURL = "jdbc:derby:FirstDatabase;create=true";
 	private JTextField dateTextField;
-	
+
 	private static Vector<DropdownPersonItem> dropdownArtistList = new Vector<>();
 	private static Vector<DropdownPersonItem> dropdownCustomerList = new Vector<>();
-	
+
 	private int artistId;
 	private int customerId;
 
@@ -41,50 +44,50 @@ public class CreateApptPanel extends JPanel {
 	public CreateApptPanel() {
 		setBorder(new EmptyBorder(30, 70, 30, 70));
 		setBackground(new Color(0, 191, 255));
-		
+
 		setLayout(new BorderLayout(0, 0));
-		
+
 		accessDB();
-		
+
 		JPanel NewApptTitlePanel = new JPanel();
 		add(NewApptTitlePanel, BorderLayout.NORTH);
-		
+
 		JLabel NewApptLbl = createNewApptLbl();
 		NewApptTitlePanel.add(NewApptLbl);
-		
+
 		JPanel clientArtistInfoPanel = createClientArtistInfoPanel();
 		clientArtistInfoPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		
+
 		JLabel clientNameLbl = createClientNameLbl();
 		clientArtistInfoPanel.add(clientNameLbl);
-		
+
 		JComboBox<DropdownPersonItem> clientDropDown = createClientDropdownCB();
 		clientArtistInfoPanel.add(clientDropDown);
-		
+
 		JLabel artistNameLbl = createArtistNameLbl();
 		clientArtistInfoPanel.add(artistNameLbl);
-		
+
 		JComboBox<DropdownPersonItem> artistDropDown = createArtistDropdownCB();
 		clientArtistInfoPanel.add(artistDropDown);
-		
+
 		JPanel apptInfoPanel = createApptInfoPanel();
 		apptInfoPanel.setLayout(new GridLayout(2, 2, 0, 0));
-		
+
 		JLabel lblDate = createDateLbl();
 		apptInfoPanel.add(lblDate);
-		
+
 		createDateTextField();
 		apptInfoPanel.add(dateTextField);
-		
+
 		JLabel apptLengthLbl = createApptLengthLbl();
 		apptInfoPanel.add(apptLengthLbl);
-		
+
 		JComboBox lengthOfApptDropDown = new JComboBox();
 		apptInfoPanel.add(lengthOfApptDropDown);
-		
+
 		JPanel createApptPanel = new JPanel();
 		add(createApptPanel, BorderLayout.SOUTH);
-		
+
 		JButton createApptBtn = createApptBtn();
 		createApptPanel.add(createApptBtn);
 
@@ -92,15 +95,15 @@ public class CreateApptPanel extends JPanel {
 
 	private JComboBox<DropdownPersonItem> createArtistDropdownCB() {
 		JComboBox<DropdownPersonItem> artistDropDown = new JComboBox<DropdownPersonItem>();
-		for(DropdownPersonItem artist : dropdownArtistList){
+		for (DropdownPersonItem artist : dropdownArtistList) {
 			artistDropDown.addItem(artist);
 		}
 
 		artistDropDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					DropdownPersonItem option = (DropdownPersonItem) artistDropDown.getSelectedItem();
-					artistId = option.getId();	
-					System.out.println("artist id: " + artistId);
+				DropdownPersonItem option = (DropdownPersonItem) artistDropDown.getSelectedItem();
+				artistId = option.getId();
+				System.out.println("artist id: " + artistId);
 			}
 		});
 		return artistDropDown;
@@ -108,43 +111,34 @@ public class CreateApptPanel extends JPanel {
 
 	private JComboBox<DropdownPersonItem> createClientDropdownCB() {
 		JComboBox<DropdownPersonItem> clientDropDown = new JComboBox<DropdownPersonItem>();
-		for(DropdownPersonItem customer : dropdownCustomerList){
+		for (DropdownPersonItem customer : dropdownCustomerList) {
 			clientDropDown.addItem(customer);
 		}
 
 		clientDropDown.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					DropdownPersonItem option = (DropdownPersonItem) clientDropDown.getSelectedItem();
-					customerId = option.getId();
-					System.out.println("cust id: " + customerId);
+				DropdownPersonItem option = (DropdownPersonItem) clientDropDown.getSelectedItem();
+				customerId = option.getId();
+				System.out.println("cust id: " + customerId);
 			}
 		});
 		return clientDropDown;
 	}
 
-	/**
-	 * Button that allows the user to create a new appointment.
-	 */
-	public JButton createApptBtn() {
+	private JButton createApptBtn() {
 		JButton createApptBtn = new JButton("Create");
 		createApptBtn.setFont(new Font("Lucida Grande", Font.PLAIN, 26));
 		return createApptBtn;
 	}
 
-	/**
-	 * Label showing the text "Length of Appointment:".
-	 */
-	public JLabel createApptLengthLbl() {
+	private JLabel createApptLengthLbl() {
 		JLabel apptLengthLbl = new JLabel("Length of Appointment:");
 		apptLengthLbl.setBorder(new EmptyBorder(0, 150, 0, 0));
 		apptLengthLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		return apptLengthLbl;
 	}
 
-	/**
-	 * Text field for entering the date.
-	 */
-	public void createDateTextField() {
+	private void createDateTextField() {
 		dateTextField = new JTextField();
 
 		dateTextField.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
@@ -152,58 +146,40 @@ public class CreateApptPanel extends JPanel {
 		dateTextField.setColumns(10);
 	}
 
-	/**
-	 * Label showing the text "Date:"
-	 */
-	public JLabel createDateLbl() {
+	private JLabel createDateLbl() {
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setBorder(new EmptyBorder(0, 250, 0, 0));
 		lblDate.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		return lblDate;
 	}
 
-	/**
-	 * Panel to show Appointment Information.
-	 */
-	public JPanel createApptInfoPanel() {
+	private JPanel createApptInfoPanel() {
 		JPanel apptInfoPanel = new JPanel();
 		apptInfoPanel.setBorder(new EmptyBorder(0, 0, 0, 0));
 		add(apptInfoPanel, BorderLayout.CENTER);
 		return apptInfoPanel;
 	}
 
-	/**
-	 * Label showing the text "Choose Artist:"
-	 */
-	public JLabel createArtistNameLbl() {
+	private  JLabel createArtistNameLbl() {
 		JLabel artistNameLbl = new JLabel("Choose Artist:");
 		artistNameLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		return artistNameLbl;
 	}
 
-	/**
-	 * Label showing the text "Choose Client:"
-	 */
-	public JLabel createClientNameLbl() {
+	private JLabel createClientNameLbl() {
 		JLabel clientNameLbl = new JLabel("Choose Client:");
 		clientNameLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
 		return clientNameLbl;
 	}
 
-	/** ????
-	 * Panel to show Artist and Client information.
-	 */
-	public JPanel createClientArtistInfoPanel() {
+	private JPanel createClientArtistInfoPanel() {
 		JPanel clientArtistInfoPanel = new JPanel();
 		clientArtistInfoPanel.setBorder(new EmptyBorder(0, 100, 0, 0));
 		add(clientArtistInfoPanel, BorderLayout.WEST);
 		return clientArtistInfoPanel;
 	}
 
-	/**
-	 * Label showing the text "Enter New Appointment Information:"
-	 */
-	public JLabel createNewApptLbl() {
+	private JLabel createNewApptLbl() {
 		JLabel NewApptLbl = new JLabel("Enter New Appointment Information:");
 		NewApptLbl.setFont(new Font("Lucida Grande", Font.PLAIN, 35));
 		return NewApptLbl;
@@ -221,7 +197,7 @@ public class CreateApptPanel extends JPanel {
 				DropdownPersonItem item = new DropdownPersonItem(id, name);
 				dropdownCustomerList.add(item);
 			}
-			
+
 			ResultSet aristTableRs = statement.executeQuery(SQLArtist.selectAll);// (selectStuff);
 			while (aristTableRs.next()) {
 				Object id = aristTableRs.getObject("ARTISTID");
@@ -243,4 +219,3 @@ public class CreateApptPanel extends JPanel {
 		}
 	}
 }
-

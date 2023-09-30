@@ -1,6 +1,7 @@
 package tattooPayroll;
-/** ????
-* This is the constructor for each of the Dropdown items.
+
+/** 
+* Creates a a dropdown menu item option and stores its name value.
 * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
 */
 public class DropdownItem {
