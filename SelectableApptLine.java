@@ -1,5 +1,10 @@
 package tattooPayroll;
 
+/**
+* TODO
+* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+*/
+
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.GridLayout;
@@ -18,9 +23,8 @@ public class SelectableApptLine extends JPanel {
 	private String customerName;
 	private int apptLength;
 
-	/**
-	 * Create the panel.
-	 */
+
+	// Should we delete these comments?
 //	public SelectableApptLine(Object date, Object artist, Object customer, Object length) {
 //		setLayout();
 //
@@ -30,6 +34,9 @@ public class SelectableApptLine extends JPanel {
 //		apptLength = length.toString();
 //	}
 
+	/**
+	 * This creates the panel for selecting each appointment line and making them editable.
+	 */
 	public SelectableApptLine(Object date, Object artistID, Object customerID, Object length, Object artistName,
 			Object custName) {
 		setLayout();
@@ -42,6 +49,9 @@ public class SelectableApptLine extends JPanel {
 		apptLength = Integer.parseInt(length.toString());
 	}
 	
+	/**
+	 * This creates the panel for selecting each appointment line and making them editable.
+	 */
 	public SelectableApptLine(Object date, Object artistID, Object customerID, Object length, Object custName) {
 		setLayout();
 
@@ -54,7 +64,7 @@ public class SelectableApptLine extends JPanel {
 	}
 
 	/**
-	 * TODO Needs doc comment
+	 * This displays all appointments for the Tattoo Shop.
 	 */
 	public void displayAllAppts() {
 		setLayout(new GridLayout(0, 4, 5, 0));
@@ -65,7 +75,7 @@ public class SelectableApptLine extends JPanel {
 	}
 
 	/**
-	 * TODO Needs doc comment
+	 * This displays all appointments for a specific artist of the Tattoo Shop.
 	 */
 	public void displayArtistAppts() {
 		setLayout(new GridLayout(0, 3, 5, 0));

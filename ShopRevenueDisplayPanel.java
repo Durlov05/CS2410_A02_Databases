@@ -1,5 +1,10 @@
 package tattooPayroll;
 
+/**
+ * This is a display panel for the Tattoo Shop's Revenue.
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+ */
+
 import javax.swing.JPanel;
 import java.awt.Color;
 import java.sql.Connection;
@@ -18,7 +23,8 @@ public class ShopRevenueDisplayPanel extends JPanel {
 	StringBuilder revenueSb = new StringBuilder();
 	
 	/**
-	 * Create the panel.
+	 * This creates the Revenue Display panel and calls the database to load it with the 
+	 * pertinent information.
 	 */
 	public ShopRevenueDisplayPanel() {
 		setBackground(new Color(123, 104, 238));
@@ -47,14 +53,11 @@ public class ShopRevenueDisplayPanel extends JPanel {
 			while (revenueTableRs.next()) {
 				Object date = revenueTableRs.getObject("Month");
 				Object rev = revenueTableRs.getObject("totalRevenue");
-
-
 				
+				// Remove the commented out line below?
 				//System.out.println(apptID + " " + artistID + " " + customerID + " " + apptDate + " " + hours);
 				revenueSb.append(date + ": " + rev + "\n");
-				
-				
-				
+
 			}
 			
 		} catch (SQLException e) {
