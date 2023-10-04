@@ -15,19 +15,24 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
+import java.awt.Dimension;
+import java.awt.Insets;
+import java.awt.FlowLayout;
 
-/** 
- * A payroll application for a tattoo shop that displays revenue by date and by artist
- * based on artist appointments and their hourly wages. It creates a frame and populates the drop downs.
+/**
+ * A payroll application for a tattoo shop that displays revenue by date and by
+ * artist based on artist appointments and their hourly wages. It creates a
+ * frame and populates the drop downs.
  * 
-* @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
-*/
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis
+ */
 public class TattooPayrollApp extends JFrame {
 	private static final String databaseURL = "jdbc:derby:FirstDatabase;create=true";
 
@@ -39,7 +44,6 @@ public class TattooPayrollApp extends JFrame {
 
 	private static Vector<DropdownItem> dropdownArtistList = new Vector<>();
 
-
 	final static String APPTPANEL = "View All Appointments";
 	final static String CREATEPANEL = "Create appointment";
 	final static String ARTISTREVENUE = "Display Artist Revenue";
@@ -50,40 +54,6 @@ public class TattooPayrollApp extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		try (Connection connection = DriverManager.getConnection(databaseURL);
-				Statement statement = connection.createStatement()) {
-//			statement.execute(SQLCustomer.dropTable);
-//			statement.execute(SQLCustomer.createTable);
-//			statement.execute(SQLCustomer.insertData);
-//			ResultSet resultSet = statement.executeQuery(SQLCustomer.selectAll);//(selectStuff);
-//			printTableData(resultSet);
-//			System.out.println("");
-
-			// statement.execute(SQLArtist.dropTable);
-			// statement.execute(SQLArtist.createTable);
-			// statement.execute(SQLArtist.insertData);
-			ResultSet aristTableRs = statement.executeQuery(SQLArtist.selectAll);// (selectStuff);
-			while (aristTableRs.next()) {
-				Object id = aristTableRs.getObject("ARTISTID");
-				Object name = aristTableRs.getObject("ARTISTNAME");
-				DropdownItem item = new DropdownPersonItem(id, name);
-				dropdownArtistList.add(item);
-
-			}
-			System.out.println("");
-
-			statement.execute(SQLAppointment.dropTable);
-			statement.execute(SQLAppointment.createTable);
-			statement.execute(SQLAppointment.insertData);
-//			ResultSet resultSet3 = statement.executeQuery(SQLAppointment.selectAll);//(selectStuff);
-//			printTableData(resultSet3);
-//			System.out.println("");
-
-		} catch (SQLException e) {
-			System.out.println("Something went wrong accessing SQL.");
-			e.printStackTrace();
-		}
-		System.out.println("\ndone.");
 
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -98,27 +68,60 @@ public class TattooPayrollApp extends JFrame {
 		});
 	}
 
+	private static void accessDB() {
+		try (Connection connection = DriverManager.getConnection(databaseURL);
+				Statement statement = connection.createStatement()) {
+
+//			statement.execute(SQLCustomer.dropTable);
+//			statement.execute(SQLCustomer.createTable);
+//			statement.execute(SQLCustomer.insertData);
+
+			// statement.execute(SQLArtist.dropTable);
+			// statement.execute(SQLArtist.createTable);
+			// statement.execute(SQLArtist.insertData);
+			ResultSet aristTableRs = statement.executeQuery(SQLArtist.selectAll);// (selectStuff);
+			while (aristTableRs.next()) {
+				Object id = aristTableRs.getObject("ARTISTID");
+				Object name = aristTableRs.getObject("ARTISTNAME");
+				DropdownItem item = new DropdownPersonItem(id, name);
+				dropdownArtistList.add(item);
+			}
+
+//			statement.execute(SQLAppointment.dropTable);
+//			statement.execute(SQLAppointment.createTable);
+//			statement.execute(SQLAppointment.insertData);
+
+		} catch (SQLException e) {
+			System.out.println("Something went wrong accessing SQL.");
+			e.printStackTrace();
+		}
+		System.out.println("\ndone.");
+	}
+
 	/**
 	 * Create the frame.
 	 */
 	public TattooPayrollApp() {
+		accessDB();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1500, 1000);
 		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new EmptyBorder(10, 50, 50, 50));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		createTitlePnl();
-
 		createControlPnl();
 
-		// TODO SHOULD THIS BE REFACTORED?
 		// displays and houses card panels
 		cardContainer = new JPanel();
 		contentPane.add(cardContainer, BorderLayout.CENTER);
 		cardContainer.setLayout(cl);
+		addBasicCards();
 
+	}
+
+	private void addBasicCards() {
 		JPanel ApptDisplayPanel = new ApptDisplayPanel(this);
 		cardContainer.add(ApptDisplayPanel, APPTPANEL);
 
@@ -128,39 +131,103 @@ public class TattooPayrollApp extends JFrame {
 		JPanel CreateApptPanel = new CreateApptPanel();
 		cardContainer.add(CreateApptPanel, CREATEPANEL);
 	}
-	
+
 	/**
 	 * Adds new cards to the card container so the user can switch between screens.
+	 * 
 	 * @param card - the display which leads to the next screen.
 	 * @param name - name of the card that needs to be called upon click.
 	 */
 	public void addNewCard(JPanel card, String name) {
 		cardContainer.add(card, name);
+		System.out.println("card count: " + cardContainer.getComponentCount());
 	}
-	
+
 	/**
 	 * Changes to a new card in the card container.
+	 * 
 	 * @param name - name of the card that is called upon clicking.
 	 */
 	public void switchToCard(String name) {
 		cl.show(cardContainer, name);
+		System.out.println("card count: " + cardContainer.getComponentCount());
 	}
 
 	private void createControlPnl() {
 		JPanel controlPnl = new JPanel();
-		controlPnl.setLayout(new GridLayout(0, 1, 0, 0));
+		controlPnl.setBorder(new EmptyBorder(-100, 10, 0, 10));
+		controlPnl.setLayout(new GridLayout(0, 1, 10, -20));
 		contentPane.add(controlPnl, BorderLayout.WEST);
 
+		JPanel bookApptPnl = createBtnPnl(controlPnl);
+		bookApptPnl.setLayout(new FlowLayout(FlowLayout.CENTER, 0, -20));
+
 		JButton scheduleApptBtn = createScheduleBtn();
-		controlPnl.add(scheduleApptBtn);
+		bookApptPnl.add(scheduleApptBtn);
 
 		JPanel dropBoxPnl = createDropBoxPnl();
 		controlPnl.add(dropBoxPnl);
+
+		JPanel logoPnl = createLogoPnl(controlPnl);
+		logoPnl.setLayout(new GridLayout(0, 1, 0, 0));
+
+		JLabel logoLbl = createWormwoodLogoLbl();
+		logoPnl.add(logoLbl);
+
+		JLabel lblShopImg = createLogoLbl();
+		logoPnl.add(lblShopImg);
+	}
+
+	private JButton createScheduleBtn() {
+		JButton scheduleApptBtn = new JButton("Book Appointment");
+		scheduleApptBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				cl.show(cardContainer, CREATEPANEL);
+			}
+		});
+		scheduleApptBtn.setVerticalAlignment(SwingConstants.BOTTOM);
+		scheduleApptBtn.setMargin(new Insets(20, 20, 20, 20));
+		scheduleApptBtn.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
+		scheduleApptBtn.setContentAreaFilled(false);
+		return scheduleApptBtn;
+	}
+
+	private JPanel createBtnPnl(JPanel controlPnl) {
+		JPanel bookApptPnl = new JPanel();
+		bookApptPnl.setBorder(new EmptyBorder(150, 0, 0, 0));
+		bookApptPnl.setSize(new Dimension(200, 200));
+		controlPnl.add(bookApptPnl);
+		return bookApptPnl;
+	}
+
+	private JPanel createLogoPnl(JPanel controlPnl) {
+		JPanel logoPnl = new JPanel();
+		logoPnl.setMaximumSize(new Dimension(5050, 32767));
+		controlPnl.add(logoPnl);
+		return logoPnl;
+	}
+
+	private JLabel createWormwoodLogoLbl() {
+		JLabel logoLbl = new JLabel("");
+		logoLbl.setVerticalAlignment(SwingConstants.BOTTOM);
+		logoLbl.setHorizontalAlignment(SwingConstants.CENTER);
+		logoLbl.setIcon(new ImageIcon(TattooPayrollApp.class.getResource("/img/wormwoodLogo.jpg")));
+		return logoLbl;
+	}
+
+	private JLabel createLogoLbl() {
+		JLabel lblShopImg = new JLabel("");
+		lblShopImg.setVerticalTextPosition(SwingConstants.TOP);
+		lblShopImg.setVerticalAlignment(SwingConstants.TOP);
+		lblShopImg.setHorizontalAlignment(SwingConstants.CENTER);
+		lblShopImg.setIcon(new ImageIcon(TattooPayrollApp.class.getResource("/img/tattooLogo.png")));
+		return lblShopImg;
 	}
 
 	private JPanel createDropBoxPnl() {
 		JPanel dropBoxPnl = new JPanel();
-		dropBoxPnl.setLayout(new GridLayout(0, 1, 0, 0));
+		dropBoxPnl.setBorder(new EmptyBorder(0, 0, 20, 0));
+		dropBoxPnl.setLayout(new GridLayout(0, 1, 0, 10));
 
 		JPanel viewApptPnl = createViewApptDropboxPnl();
 		dropBoxPnl.add(viewApptPnl);
@@ -200,11 +267,26 @@ public class TattooPayrollApp extends JFrame {
 					String name = option.getName();
 					String cardName = name + "rev";
 
+					// BAD MEMORY WAY?
+//					cardContainer.add(new ArtistRevenueDisplayPanel(id, name), cardName);
+//					cl.show(cardContainer, cardName);
+
+					// POSSIBLY BETTER?
+					cardContainer.removeAll();
+					addBasicCards();
 					cardContainer.add(new ArtistRevenueDisplayPanel(id, name), cardName);
 					cl.show(cardContainer, cardName);
+
+					System.out.println("card count: " + cardContainer.getComponentCount());
 				} else {
-					System.out.println("shop revenue");
+					// OLD
+					// cl.show(cardContainer, SHOPREVENUE);
+
+					// MAYBE??
+					cardContainer.removeAll();
+					addBasicCards();
 					cl.show(cardContainer, SHOPREVENUE);
+					System.out.println("card count: " + cardContainer.getComponentCount());
 				}
 			}
 		});
@@ -245,11 +327,27 @@ public class TattooPayrollApp extends JFrame {
 					String name = option.getName();
 					String cardName = name + "appt";
 
+					// BAD MEMORY WAY?
+//					cardContainer.add(new ArtistApptDisplayPanel(id, name, frame), cardName);
+//					cl.show(cardContainer, cardName);
+//					
+					// MAYBE BETTER?
+					cardContainer.removeAll();
+					addBasicCards();
 					cardContainer.add(new ArtistApptDisplayPanel(id, name, frame), cardName);
 					cl.show(cardContainer, cardName);
+					System.out.println("card count: " + cardContainer.getComponentCount());
+
 				} else {
+					// BAD MEMORY WAY?
+//					JPanel ApptDisplayPanel = new ApptDisplayPanel(frame);
+//					cardContainer.add(ApptDisplayPanel, APPTPANEL);
+
+					// POSSIBLY BETTER?
+					cardContainer.removeAll();
+					addBasicCards();
 					cl.show(cardContainer, APPTPANEL);
-					System.out.println("all appointments");
+					System.out.println("card count: " + cardContainer.getComponentCount());
 				}
 			}
 		});
@@ -268,17 +366,6 @@ public class TattooPayrollApp extends JFrame {
 
 		JLabel titleLbl = createTitleLbl();
 		titlePnl.add(titleLbl);
-	}
-
-	private JButton createScheduleBtn() {
-		JButton scheduleApptBtn = new JButton("Schedule Appt.");
-		scheduleApptBtn.setFont(new Font("Lucida Grande", Font.PLAIN, 21));
-		scheduleApptBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				cl.show(cardContainer, CREATEPANEL);
-			}
-		});
-		return scheduleApptBtn;
 	}
 
 	private JLabel createTitleLbl() {

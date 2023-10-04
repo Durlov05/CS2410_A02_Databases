@@ -17,6 +17,7 @@ public class DropdownPersonItem extends DropdownItem {
 		super(name);
 		this.id = Integer.parseInt(id.toString());
 	}
+	
 	public int getId() {
 		return id;
 	}

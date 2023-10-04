@@ -11,8 +11,7 @@ import java.util.Vector;
 /**
  * Demonstrates that our database tables can created and contain data.
  * 
- * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis + Ghost In
- *         the Room
+ * @author Syed Mujibur Rahman (Mujib) + Nikki Burr + Nikki Buzianis 
  */
 
 public class A02_Database_Applicator {
@@ -22,16 +21,16 @@ public class A02_Database_Applicator {
 	public static void main(String[] args) {
 		try (Connection connection = DriverManager.getConnection(databaseURL);
 				Statement statement = connection.createStatement()) {
-			statement.execute(SQLCustomer.dropTable);
-		statement.execute(SQLCustomer.createTable);
-			statement.execute(SQLCustomer.insertData);
+			//statement.execute(SQLCustomer.dropTable);
+			//statement.execute(SQLCustomer.createTable);
+			//statement.execute(SQLCustomer.insertData);
 //			ResultSet resultSet = statement.executeQuery(SQLCustomer.selectAll);// (selectStuff);
 //			printTableData(resultSet);
 //			System.out.println("");
 
-			statement.execute(SQLArtist.dropTable);
-			statement.execute(SQLArtist.createTable);
-			statement.execute(SQLArtist.insertData);
+			//statement.execute(SQLArtist.dropTable);
+			//statement.execute(SQLArtist.createTable);
+			//statement.execute(SQLArtist.insertData);
 //			ResultSet resultSet2 = statement.executeQuery(SQLArtist.selectAll);// (selectStuff);
 //			printTableData(resultSet2);
 //			System.out.println("\nBLOOP BLORP\n");
@@ -42,20 +41,20 @@ public class A02_Database_Applicator {
 //				dropdownArtistList.add(item);
 //			}
 
-			statement.execute(SQLAppointment.dropTable);
-			statement.execute(SQLAppointment.createTable);
-			statement.execute(SQLAppointment.insertData);
-//			ResultSet resultSet3 = statement.executeQuery(SQLAppointment.selectAll);// (selectStuff);
-//			printTableData(resultSet3);
-//			System.out.println("");
+			//statement.execute(SQLAppointment.dropTable);
+//			statement.execute(SQLAppointment.createTable);
+//			statement.execute(SQLAppointment.insertData);
+			ResultSet resultSet3 = statement.executeQuery(SQLAppointment.selectAll);// (selectStuff);
+			printTableData(resultSet3);
+			System.out.println("^^^^");
 
 //			ResultSet resultSet4 = statement.executeQuery(SQLAppointment.selectAllInfo);// (selectStuff);
 //			printTableData(resultSet4);
 //			System.out.println("");
 			
-			ResultSet resultSet5 = statement.executeQuery(SQLAppointment.selectArtistAppt(500));// (selectStuff);
-			printTableData(resultSet5);
-			System.out.println("");
+//			ResultSet resultSet5 = statement.executeQuery(SQLAppointment.selectArtistAppt(500));// (selectStuff);
+//			printTableData(resultSet5);
+//			System.out.println("");
 
 		} catch (SQLException e) {
 			System.out.println("Something went wrong accessing SQL.");

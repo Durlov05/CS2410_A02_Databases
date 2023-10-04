@@ -27,24 +27,13 @@ public class SelectableApptLine extends JPanel {
 	private int apptLength;
 
 	/**
-	 * Create the panel.
-	 */
-//	public SelectableApptLine(Object date, Object artist, Object customer, Object length) {
-//		setLayout();
-//
-//		this.date = date.toString();
-//		this.artistName = artist.toString();
-//		this.customerName = customer.toString();
-//		apptLength = length.toString();
-//	}
-
-	/**
 	 * Inititalizes all of the values for an appointment. Meant to be displayed on All Appointments view. 
 	 */
-	public SelectableApptLine(Object date, Object artistID, Object customerID, Object length, Object artistName,
+	public SelectableApptLine(Object apptId, Object date, Object artistID, Object customerID, Object length, Object artistName,
 			Object custName) {
 		setLayout();
 
+		this.apptID = Integer.parseInt(apptId.toString());
 		this.date = date.toString();
 		this.artistID = Integer.parseInt(artistID.toString());
 		this.artistName = artistName.toString();
@@ -56,9 +45,10 @@ public class SelectableApptLine extends JPanel {
 	/**
 	 * Inititalizes all of the values for an appointment. Meant to be displayed on an artist's aapointment page. 
 	 */
-	public SelectableApptLine(Object date, Object artistID, Object customerID, Object length, Object custName) {
+	public SelectableApptLine(Object apptId, Object date, Object artistID, Object customerID, Object length, Object custName) {
 		setLayout();
 
+		this.apptID = Integer.parseInt(apptId.toString());
 		this.date = date.toString();
 		this.artistID = Integer.parseInt(artistID.toString());
 		// this.artistName = artistName.toString();
@@ -70,7 +60,7 @@ public class SelectableApptLine extends JPanel {
 	/**
 	 * Adds an appointment's date, artist, customer, and length to a line. 
 	 */
-	public void displayAllAppts() {
+	public void fillOutAppointment() {
 		setLayout(new GridLayout(0, 4, 5, 0));
 		add(createLbl(this.date));
 		add(createLbl(artistName));
