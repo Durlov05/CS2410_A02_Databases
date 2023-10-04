@@ -36,7 +36,6 @@ public class SQLAppointment {
 	 */
 	public static final String selectAll = 
 			"Select * from Appointment";
-	
 
 	/**
 	 * Deletes the Appointment table.
@@ -151,7 +150,8 @@ public class SQLAppointment {
 			+ "Artist.ArtistName As Artist_Name, Appointment.Hours "
 			+ "from Appointment "
 			+ "join Artist ON Appointment.ArtistID = Artist.ArtistId "
-			+ "join Customer on Appointment.CustomerID = Customer.CustomerId";
+			+ "join Customer on Appointment.CustomerID = Customer.CustomerId "
+			+ "order by Appointment.ApptDate ";
 	
 	/**
 	 * TODO
@@ -164,7 +164,8 @@ public class SQLAppointment {
 				+ "from Appointment "
 				+ "inner join Artist on Appointment.ArtistID = Artist.ArtistId "
 				+ "and Artist.ArtistId = " + artID + " "
-				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId";
+				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId "
+				+ "order by Appointment.ApptDate ";
 	}
 }
 

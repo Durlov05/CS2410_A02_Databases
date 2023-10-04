@@ -19,6 +19,4 @@ public class DropdownItem {
 	public String toString() {
 		return name;
 	}
-	
-	
 }
