@@ -29,14 +29,33 @@ public class SQLAppointment {
 			+ "(501, 103, '2023-09-25',1), "
 			+ "(500, 102, '2023-10-09',3), "
 			+ "(504, 100, '2023-10-01',5), "
-			+ "(502, 106, '2023-09-27',4)";
+			+ "(502, 109, '2023-01-27',3), "
+			+ "(500, 106, '2023-01-07',5), "
+			+ "(504, 109, '2023-11-02',6), "
+			+ "(501, 107, '2023-12-03',8), "
+			+ "(500, 106, '2023-02-05',1), "
+			+ "(502, 103, '2023-04-25',2), "
+			+ "(504, 102, '2023-04-14',3), "
+			+ "(502, 108, '2023-06-12',11), "
+			+ "(500, 106, '2023-05-04',2), "
+			+ "(503, 106, '2023-01-01',6), "
+			+ "(501, 102, '2023-08-27',3), "
+			+ "(503, 106, '2023-08-27',13), "
+			+ "(501, 109, '2023-08-27',1), "
+			+ "(500, 106, '2023-08-27',5), "
+			+ "(500, 108, '2023-08-27',2), "
+			+ "(504, 101, '2023-08-27',4), "
+			+ "(504, 106, '2023-08-27',3), "
+			+ "(500, 109, '2023-08-27',5), "
+			+ "(501, 106, '2023-08-27',8)";
+			;
 	
 	/**
 	 * Selects all data from the Appointment table.
 	 */
 	public static final String selectAll = 
 			"Select * from Appointment";
-
+	
 	/**
 	 * Deletes the Appointment table.
 	 */
@@ -47,7 +66,7 @@ public class SQLAppointment {
 	 * Selects Total Revenue for the shop by Month.
 	 */
 	public static String selectTotalRevenue() {
-		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
+		return "Select COALESCE(CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
 				+ "WHEN month(ApptDate) = 3 THEN 'March' "
 				+ "WHEN month(ApptDate) = 4 THEN 'April' "
@@ -59,11 +78,11 @@ public class SQLAppointment {
 				+ "WHEN month(ApptDate) = 10 THEN 'October' "
 				+ "WHEN month(ApptDate) = 11 THEN 'November' "
 				+ "WHEN month(ApptDate) = 12 THEN 'December' "
-				+ "END as Month, "
+				+ "END, 'Shop Total') as Month, "
 				+ "sum(apt.hours * art.HourlyRate) as totalRevenue "
 				+ "from Appointment as apt "
 				+ "inner join artist as art on apt.artistID = art.artistid "
-				+ "group by CASE WHEN month(ApptDate) = 1 THEN 'January' "
+				+ "group by rollup (CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
 				+ "WHEN month(ApptDate) = 3 THEN 'March' "
 				+ "WHEN month(ApptDate) = 4 THEN 'April' "
@@ -75,14 +94,14 @@ public class SQLAppointment {
 				+ "WHEN month(ApptDate) = 10 THEN 'October' "
 				+ "WHEN month(ApptDate) = 11 THEN 'November' "
 				+ "WHEN month(ApptDate) = 12 THEN 'December' "
-				+ "END ";
+				+ "END) ";
 	}
 	
 	/**
 	 * Selects Total Revenue for the shop by Month, Customer Name and Artist.
 	 */
 	public static String selectTotalArtistRevenue(int artID) {
-		return "Select CASE WHEN month(ApptDate) = 1 THEN 'January' "
+		return "Select COALESCE(CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
 				+ "WHEN month(ApptDate) = 3 THEN 'March' "
 				+ "WHEN month(ApptDate) = 4 THEN 'April' "
@@ -94,14 +113,14 @@ public class SQLAppointment {
 				+ "WHEN month(ApptDate) = 10 THEN 'October' "
 				+ "WHEN month(ApptDate) = 11 THEN 'November' "
 				+ "WHEN month(ApptDate) = 12 THEN 'December' "
-				+ "END as Month, "
+				+ "END, 'Artist Total') as Month, "
 				+ "Customer.FirstName + ' ' + Customer.LastName AS Customer_Name "
 				+ "sum(apt.hours * art.HourlyRate) as Revenue "
 				+ "from Appointment as apt "
 				+ "inner join artist as art on apt.artistID = art.artistid "
 				+ "and art.artistid = " + artID + " "
 				+ "inner join Customer as Cust on apt.CustomerID = Cust.CustomerId"
-				+ "group by CASE WHEN month(ApptDate) = 1 THEN 'January' "
+				+ "group by rollup (CASE WHEN month(ApptDate) = 1 THEN 'January' "
 				+ "WHEN month(ApptDate) = 2 THEN 'February' "
 				+ "WHEN month(ApptDate) = 3 THEN 'March' "
 				+ "WHEN month(ApptDate) = 4 THEN 'April' "
@@ -114,7 +133,7 @@ public class SQLAppointment {
 				+ "WHEN month(ApptDate) = 11 THEN 'November' "
 				+ "WHEN month(ApptDate) = 12 THEN 'December' "
 				+ "END, "
-				+ "Cust.FirstName + ' ' + Cust.LastName ";
+				+ "Cust.FirstName + ' ' + Cust.LastName) ";
 	}
 	
 	/**
@@ -142,31 +161,27 @@ public class SQLAppointment {
 	}
 	
 	/**
-	 * TODO
+	 * 
 	 */
 	public static final String selectAllInfo = 
-			"Select Appointment.ApptID, Appointment.ApptDate, Appointment.ArtistID, Appointment.CustomerID, "
-			+ "Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, " 
+			"Select Appointment.ApptID, Appointment.ApptDate, "
+			+ "Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, "  
 			+ "Artist.ArtistName As Artist_Name, Appointment.Hours "
 			+ "from Appointment "
 			+ "join Artist ON Appointment.ArtistID = Artist.ArtistId "
-			+ "join Customer on Appointment.CustomerID = Customer.CustomerId "
-			+ "order by Appointment.ApptDate ";
+			+ "join Customer on Appointment.CustomerID = Customer.CustomerId";
 	
 	/**
-	 * TODO
-	 * @param artID
-	 * @return
+	 * 
 	 */
 	public static String selectArtistAppt(int artID) {
-		return "Select Appointment.ApptDate, Customer.FirstName || ' ' || Customer.LastName AS Customer_Name, Appointment.Hours,"
-				+ "Appointment.ArtistID, Appointment.CustomerID, Appointment.ApptID "
+		return "Select Appointment.ApptDate, Customer.FirstName + ' ' + Customer.LastName AS Customer_Name, Appointment.Hours "
 				+ "from Appointment "
 				+ "inner join Artist on Appointment.ArtistID = Artist.ArtistId "
 				+ "and Artist.ArtistId = " + artID + " "
-				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId "
-				+ "order by Appointment.ApptDate ";
+				+ "inner join Customer on Appointment.CustomerID = Customer.CustomerId";
 	}
 }
+
 
 
